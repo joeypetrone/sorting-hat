@@ -1,3 +1,7 @@
 body {
     background-color: cornflowerblue;
 }
+
+#student-form {
+    margin: 50px;
+}
