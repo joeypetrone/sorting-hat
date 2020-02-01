@@ -1,13 +1,9 @@
-body {
-    background-color: cornflowerblue;
-}
-
-#student-form {
-    margin-left: 100px;
-    margin-right: 100px
+#student-input {
+    width: 410px;
 }
 
 #student-cards {
+    width:auto;
     margin: 50px;
     display: flex;
     flex-wrap: wrap;
@@ -23,4 +19,9 @@ body {
 
 .card-body {
     width: 250px;
+}
+
+footer {
+    color: rgb(219, 219, 219);
+    text-align: center;
 }

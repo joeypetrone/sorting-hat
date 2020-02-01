@@ -5,22 +5,22 @@ studentArray = [];
 // HOUSE ARRAY 
 houseArray = [{
     name: 'Gryffindor',
-    color: 'red',
+    color: 'danger',
     song: 'You might belong in Gryffindor, Where dwell the brave at heart, Their daring, nerve, and chivalry Set Gryffindors apart'
 },
 {
     name: 'Hufflepuff',
-    color: 'yellow',
+    color: 'warning',
     song: 'You might belong in Hufflepuff, Where they are just and loyal, Those patient Hufflepuffs are true, And unafraid of toil.'
 },
 {    
     name: 'Ravenclaw',
-    color: 'blue',
+    color: 'primary',
     song: 'Or yet in wise old Ravenclaw, If you\'ve a ready mind, Where those of wit and learning, Will always find their kind.'
 },
 {    
     name: 'Slytherin',
-    color: 'green',
+    color: 'success',
     song: 'Or perhaps in Slytherin, You\'ll make your real friends, Those cunning folk use any means, To achieve their ends.'
 }];
 
@@ -33,13 +33,13 @@ const printToDom = (divId, textToPrint) => {
 // FORM BUILDER 
 const formBuider = () => {
     let domString = '';
-    domString += '<form>';
-    domString += '  <div class="form-group" id="form">';
-    domString += '    <label>Lets find your Hogarts House, enter your name to be sorted!</label>';
+    domString += '<form class="m-5 d-flex justify-content-center flex-wrap">';
+    domString += '  <div class="form-group w-35" id="form">';
+    domString += '    <label class="font-weight-bold">Find your Hogarts House, enter your name to be sorted!</label>';
     domString += '          <input id="student-input" class="form-control" placeholder="Type your name here">';
     domString += '    <small class="form-text text-muted">We\'ll find the most suitable house for you.</small>';
     domString += '  </div>';
-    domString += '  <a href="#form" id="submit-btn" class="btn btn-primary mb-2" role="button">Submit</a>';
+    domString += '  <a href="#form" id="submit-btn" class="btn btn-primary mb-2 h-25 align-self-center" role="button">Submit</a>';
     domString += '</form>';
 
     printToDom('student-form', domString);
@@ -50,8 +50,8 @@ const formBuider = () => {
 const studentCardBuider = (student) => {
     let domString = '';
     for (let i=0; i < student.length; i++) {
-    domString += '<div class="card text-black bg-white mb-3" id=" style="max-width: 18rem;">';
-    domString += `  <div class="card-header" id="student-name">${student[i].name}</div>`;
+    domString += `<div class="card text-black bg-${student[i].houseColor} text-white mb-3" id=" style="max-width: 18rem;">`;
+    domString += `  <div class="card-header font-weight-bold" id="student-name"><h4>${student[i].name}</h4></div>`;
     domString += '  <div class="card-body">';
     domString += `    <h5 class="card-title">${student[i].house}</h5>`;
     domString += `    <p class="card-text">${student[i].houseSong}</p>`;
@@ -84,6 +84,7 @@ const houseSorter = (num) => {
     newHouse = houseArray[randomNum].name;
     studentArray[num].house = newHouse;
     studentArray[num].houseSong = houseArray[randomNum].song;
+    studentArray[num].houseColor = houseArray[randomNum].color;
     studentArray[num].id = num;
     studentCardBuider(studentArray);
 };
