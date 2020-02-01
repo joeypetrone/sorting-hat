@@ -33,13 +33,13 @@ const printToDom = (divId, textToPrint) => {
 // FORM BUILDER 
 const formBuider = () => {
     let domString = '';
-    domString += '<form class="m-5 d-flex justify-content-center flex-wrap">';
+    domString += '<form class="m-3 p-4 d-flex justify-content-center flex-wrap">';
     domString += '  <div class="form-group w-35" id="form">';
     domString += '    <label class="font-weight-bold">Find your Hogarts House, enter your name to be sorted!</label>';
     domString += '          <input id="student-input" class="form-control" placeholder="Type your name here">';
     domString += '    <small class="form-text text-muted">We\'ll find the most suitable house for you.</small>';
     domString += '  </div>';
-    domString += '  <a href="#form" id="submit-btn" class="btn btn-primary mb-2 h-25 align-self-center" role="button">Submit</a>';
+    domString += '  <a href="#student-form" id="submit-btn" class="btn btn-primary mb-2 h-25 align-self-center" role="button">Submit</a>';
     domString += '</form>';
 
     printToDom('student-form', domString);
@@ -57,14 +57,14 @@ const studentCardBuider = (student) => {
     domString += `    <p class="card-text">${student[i].houseSong}</p>`;
     domString += '  </div>';
     domString += '  <div class="card-footer">';
-    domString += `    <button id="expel-btn" class="btn expel-btn btn-dark mb-2">Expel</button>`;
+    domString += `    <button id="${student[i].id}" class="btn expel-btn btn-dark mb-2">Expel</button>`;
     domString += '  </div>';
     domString += '</div>';
     }
     printToDom('student-cards', domString);
     classname = document.getElementsByClassName('expel-btn');
-    for (var i = 0; i < studentArray.length; i++) {
-        classname[i].addEventListener('click', expelStudent);
+    for (var i = 0; i < classname.length; i++) {
+        classname[i].addEventListener('click', expelStudent, false);
     }
     formBuider();
 };
@@ -85,15 +85,15 @@ const houseSorter = (num) => {
     studentArray[num].house = newHouse;
     studentArray[num].houseSong = houseArray[randomNum].song;
     studentArray[num].houseColor = houseArray[randomNum].color;
-    studentArray[num].id = num;
+    studentArray[num].id = 'student' + num;
     studentCardBuider(studentArray);
 };
 
 // EXPEL STUDENT
-const expelStudent = () => {
-    console.log('in expel');
+const expelStudent = (e) => {
+    studentId = e.target.id;
     for( var i = 0; i < studentArray.length; i++){ 
-        if ( studentArray[i].name === 'Jim') {
+        if ( studentArray[i].id === studentId ) {
           studentArray.splice(i, 1); 
         }
      }
