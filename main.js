@@ -1,5 +1,5 @@
 // STUDENT ARRAY
-studentArray = [{}];
+studentArray = [];
 
 
 // HOUSE ARRAY 
@@ -34,12 +34,12 @@ const printToDom = (divId, textToPrint) => {
 const formBuider = () => {
     let domString = '';
     domString += '<form>';
-    domString += '  <div class="form-group">';
+    domString += '  <div class="form-group" id="form">';
     domString += '    <label>Lets find your Hogarts House, enter your name to be sorted!</label>';
     domString += '          <input id="student-input" class="form-control" placeholder="Type your name here">';
     domString += '    <small class="form-text text-muted">We\'ll find the most suitable house for you.</small>';
     domString += '  </div>';
-    domString += '  <button id="submit-btn" class="btn btn-primary mb-2">Submit</button>';
+    domString += '  <a href="#form" id="submit-btn" class="btn btn-primary mb-2" role="button">Submit</a>';
     domString += '</form>';
 
     printToDom('student-form', domString);
@@ -49,29 +49,54 @@ const formBuider = () => {
 // STUDENT CARD BUILDER 
 const studentCardBuider = (student) => {
     let domString = '';
-    domString += '<div class="card text-black bg-white mb-3" style="max-width: 18rem;">';
-    domString += `  <div class="card-header">${student[0].name}</div>`;
+    for (let i=0; i < student.length; i++) {
+    domString += '<div class="card text-black bg-white mb-3" id=" style="max-width: 18rem;">';
+    domString += `  <div class="card-header" id="student-name">${student[i].name}</div>`;
     domString += '  <div class="card-body">';
-    domString += `    <h5 class="card-title">${student[0].house}</h5>`;
-    domString += '    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>';
+    domString += `    <h5 class="card-title">${student[i].house}</h5>`;
+    domString += `    <p class="card-text">${student[i].houseSong}</p>`;
+    domString += '  </div>';
+    domString += '  <div class="card-footer">';
+    domString += `    <button id="expel-btn" class="btn expel-btn btn-dark mb-2">Expel</button>`;
     domString += '  </div>';
     domString += '</div>';
-
+    }
     printToDom('student-cards', domString);
+    classname = document.getElementsByClassName('expel-btn');
+    for (var i = 0; i < studentArray.length; i++) {
+        classname[i].addEventListener('click', expelStudent);
+    }
+    formBuider();
 };
 
 // STUDENT ARRAY BUILDER
 const studentArrayBuilder = () => {
-    studentArray[0].name = document.getElementById('student-input').value; // adds input to studentArray by creating an object with name key
-    houseSorter();
+    studentArray.push({name});
+    studentNumber = studentArray.length - 1;
+    studentArray[studentNumber].name = document.getElementById('student-input').value; // adds input to studentArray by creating an object with name key
+    houseSorter(studentNumber);
 };
 
 // HOUSE SORTER
-const houseSorter = () => {
+const houseSorter = (num) => {
     let newHouse = '';
-    newHouse = houseArray[Math.floor(Math.random() * houseArray.length)].name;
-    studentArray[0].house = newHouse;
+    const randomNum = Math.floor(Math.random() * houseArray.length)
+    newHouse = houseArray[randomNum].name;
+    studentArray[num].house = newHouse;
+    studentArray[num].houseSong = houseArray[randomNum].song;
+    studentArray[num].id = num;
     studentCardBuider(studentArray);
+};
+
+// EXPEL STUDENT
+const expelStudent = () => {
+    console.log('in expel');
+    for( var i = 0; i < studentArray.length; i++){ 
+        if ( studentArray[i].name === 'Jim') {
+          studentArray.splice(i, 1); 
+        }
+     }
+     studentCardBuider(studentArray);
 };
 
 // EVENTS
