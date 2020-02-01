@@ -33,17 +33,22 @@ const printToDom = (divId, textToPrint) => {
 // FORM BUILDER 
 const formBuider = () => {
     let domString = '';
-    domString += '<form class="m-3 p-4 d-flex justify-content-center flex-wrap">';
+    domString += '<form class="m-2 p-4 d-flex justify-content-center flex-wrap">';
     domString += '  <div class="form-group w-35" id="form">';
-    domString += '    <label class="font-weight-bold">Find your Hogarts House, enter your name to be sorted!</label>';
-    domString += '          <input id="student-input" class="form-control" placeholder="Type your name here">';
+    domString += '    <label class="font-weight-bold" for="student-input">Find your Hogarts House, enter your name to be sorted!</label>';    
+    domString += '      <input type="text" id="student-input" class="form-control" placeholder="Type your name here" required>';
     domString += '    <small class="form-text text-muted">We\'ll find the most suitable house for you.</small>';
     domString += '  </div>';
-    domString += '  <a href="#student-form" id="submit-btn" class="btn btn-primary mb-2 h-25 align-self-center" role="button">Submit</a>';
+    domString += '  <button type="submit" onClick="jump(\'form\')" class="btn btn-primary mb-2 h-25 align-self-center" id="submit-btn">Submit</button>';
     domString += '</form>';
 
     printToDom('student-form', domString);
     document.getElementById('submit-btn').addEventListener('click', studentArrayBuilder );
+};
+
+// JUMP TO FORM
+const jump = (h) => {
+    document.getElementById(h).scrollIntoView();
 };
 
 // STUDENT CARD BUILDER 
@@ -71,10 +76,14 @@ const studentCardBuider = (student) => {
 
 // STUDENT ARRAY BUILDER
 const studentArrayBuilder = () => {
-    studentArray.push({name});
-    studentNumber = studentArray.length - 1;
-    studentArray[studentNumber].name = document.getElementById('student-input').value; // adds input to studentArray by creating an object with name key
-    houseSorter(studentNumber);
+    if (document.getElementById('student-input').value === '') {
+        
+    } else {
+        studentArray.push({name});
+        studentNumber = studentArray.length - 1;
+        studentArray[studentNumber].name = document.getElementById('student-input').value; // adds input to studentArray by creating an object with name key
+        houseSorter(studentNumber);
+    }
 };
 
 // HOUSE SORTER
