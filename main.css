@@ -15,7 +15,12 @@ body {
 }
 
 .card {
+    text-align: center;
     margin-left: 15px;
     margin-right: 15px;
     margin-top: 15px;
+}
+
+.card-body {
+    width: 250px;
 }
