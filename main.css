@@ -10,6 +10,14 @@
     justify-content: center;
 }
 
+#expelled-cards {
+    width:auto;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .card {
     text-align: center;
     margin-left: 15px;

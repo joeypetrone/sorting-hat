@@ -1,5 +1,6 @@
-// STUDENT ARRAY
+// STUDENT ARRAYS
 studentArray = [];
+expelledStudents = [];
 
 
 // HOUSE ARRAY 
@@ -39,21 +40,31 @@ const formBuider = () => {
     domString += '      <input type="text" id="student-input" class="form-control" placeholder="Type your name here" required>';
     domString += '    <small class="form-text text-muted">We\'ll find the most suitable house for you.</small>';
     domString += '  </div>';
-    domString += '  <button type="submit" onClick="jump(\'form\')" class="btn btn-primary mb-2 h-25 align-self-center" id="submit-btn">Submit</button>';
+    domString += '  <button type="submit" onClick="jumpToForm(\'form\')" class="btn btn-primary mb-2 h-25 align-self-center" id="submit-btn">Submit</button>';
     domString += '</form>';
-
+  
     printToDom('student-form', domString);
     document.getElementById('submit-btn').addEventListener('click', studentArrayBuilder );
 };
 
 // JUMP TO FORM
-const jump = (h) => {
-    document.getElementById(h).scrollIntoView();
+const jumpToForm = (id) => {
+    document.getElementById(id).scrollIntoView();
 };
 
 // STUDENT CARD BUILDER 
 const studentCardBuider = (student) => {
     let domString = '';
+    console.log(student.length);
+    if (student.length === 0) {
+        domString += '';
+        printToDom('student-title', domString);
+    } else {
+        domString += `<h1 class="display-5 d-flex justify-content-center">Welcome to Hogwarts!</h1>`;
+        printToDom('student-title', domString);
+    }
+    domString = '';
+
     for (let i=0; i < student.length; i++) {
     domString += `<div class="card text-black bg-${student[i].houseColor} text-white mb-3" id=" style="max-width: 18rem;">`;
     domString += `  <div class="card-header font-weight-bold" id="student-name"><h4>${student[i].name}</h4></div>`;
@@ -72,6 +83,28 @@ const studentCardBuider = (student) => {
         classname[i].addEventListener('click', expelStudent, false);
     }
     formBuider();
+};
+
+// EXPELLED CARD BUILDER 
+const expelledCardBuider = (student) => {
+    let domString = '';
+    domString += `<h1 class="display-5 d-flex justify-content-center">Voldermort's Army</h1>`;
+    printToDom('expelled-title', domString);
+    domString = '';
+
+    for (let i=0; i < student.length; i++) {
+    domString += `<div class="card text-black bg-dark text-white mb-3" id=" style="max-width: 18rem;">`;
+    domString += `  <div class="card-header font-weight-bold" id="student-name"><h4>${student[i].name}</h4></div>`;
+    domString += '  <div class="card-body">';
+    domString += `    <h5 class="card-title">${student[i].house}</h5>`;
+    domString += `    <p class="card-text">${student[i].houseSong}</p>`;
+    domString += '  </div>';
+    domString += '  <div class="card-footer">';
+    domString += `    <h5>Expelled</h5>`;
+    domString += '  </div>';
+    domString += '</div>';
+    }
+    printToDom('expelled-cards', domString);
 };
 
 // STUDENT ARRAY BUILDER
@@ -100,13 +133,15 @@ const houseSorter = (num) => {
 
 // EXPEL STUDENT
 const expelStudent = (e) => {
-    studentId = e.target.id;
+    const studentId = e.target.id;
     for( var i = 0; i < studentArray.length; i++){ 
         if ( studentArray[i].id === studentId ) {
-          studentArray.splice(i, 1); 
+            const expelled = studentArray.splice(i, 1);
+            expelledStudents.push(expelled[0]);
         }
      }
      studentCardBuider(studentArray);
+     expelledCardBuider(expelledStudents);
 };
 
 // EVENTS
