@@ -128,7 +128,7 @@ const houseSorter = (num) => {
     studentArray[num].houseSong = houseArray[randomNum].song;
     studentArray[num].houseColor = houseArray[randomNum].color;
     studentArray[num].id = 'student' + num;
-    studentCardBuider(studentArray);
+    sortStudentsByName(studentArray);
 };
 
 // EXPEL STUDENT
@@ -140,10 +140,31 @@ const expelStudent = (e) => {
             expelledStudents.push(expelled[0]);
         }
      }
-     studentCardBuider(studentArray);
+     sortStudentsByName(studentArray);
      expelledCardBuider(expelledStudents);
 };
 
+// SORT STUDNTS BY NAME
+const sortStudentsByName = (arr) => {
+    sortArray = [];
+    sortedArray = [];
+    
+    for ( let i=0; i < arr.length; i++ ) {
+          sortArray.push( arr[i].name );
+          sortArray.sort();
+    }
+    
+    for ( let i=0; i < sortArray.length; i++ ) {
+        for (let j=0; j < arr.length; j++) {
+            if ( arr[j].name === sortArray[i] ) {
+                  sortedArray.push(arr[j]);
+            } else {
+                  // Keep looping 
+            }
+        }
+    }
+    studentCardBuider(sortedArray);
+};
 // EVENTS
 const events = () => {
     document.getElementById('join-btn').addEventListener('click', formBuider );
